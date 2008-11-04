@@ -42,7 +42,7 @@ int RunApplication ( int argc, char **argv )
 	{
 		string usage = "Usage: WebServer start | stop | help";
 		console->WriteLine(usage);
-		inst = new Server(80); // This is here simply for debugging purposes
+		inst = new Server(8080); // This is here simply for debugging purposes
 	}
 	else{
 	init(argv[1]);

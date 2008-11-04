@@ -4,7 +4,7 @@
 Server::Server(unsigned short port) {
 		TCPSocket * s = new TCPSocket();
 		s->Listen(port);
-		cout << "Listening on port 80" << endl;
+		cout << "Listening on port " << port << endl;
 		Accept(s);
 }
 
@@ -16,6 +16,8 @@ int Server::Accept(TCPSocket * a) {
 		string in;
                 int ccerr;
                 ccerr = s->Accept(&nulls);
+                if (ccerr == CC_ERR_WOULD_BLOCK)
+                    cout << "Non-blocking Sockets are enabled...";
 		if(ccerr == 0) { // If Accept(&nulls) responded with CC_ERR_NONE
 			cout << "Reading from socket..." << endl;
 			if(nulls->Read(in) == 0)
@@ -27,9 +29,8 @@ int Server::Accept(TCPSocket * a) {
 				cout << "Error with Reading?" << endl;
 			}
 		}
-                else
-                    cout << ccerr << endl;
-                ThreadSleep(500);
+                nulls->Close();
+                ThreadSleep(50);
 	}
 
 	return 0;

@@ -14,6 +14,7 @@
 
 #include <crisscross/crisscross.h>
 
+using namespace CrissCross;
 using namespace CrissCross::IO;
 using namespace CrissCross::Network;
 using namespace CrissCross::System;
