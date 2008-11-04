@@ -1,0 +1,11 @@
+Inceku v0alpha README
+
+First off, when I develop this on my machine, the directory structure is layed out like this:
+
+/
+>crisscross
+>>source
+>>>crisscross
+>inceku
+
+This means that the includes are also changed to reflect this setup. Please consider this before building. :)
