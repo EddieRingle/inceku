@@ -28,8 +28,8 @@ int Server::Accept(TCPSocket * a) {
 			} else {
 				cout << "Error with Reading?" << endl;
 			}
+                        nulls->Close();
 		}
-                nulls->Close();
                 ThreadSleep(50);
 	}
 
