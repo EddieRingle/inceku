@@ -3,17 +3,24 @@
 
 Console *sconsole = NULL;
 
-// Server Constructor
-Server::Server(unsigned short port)
+// Server Constructor(s)
+Server::Server()
 {
 	sconsole = new Console(stdout, stdin);
 	ReadConfig();
-	/*
 	TCPSocket *s = new TCPSocket();
 	s->Listen(port);
 	sconsole->WriteLine("Listening on port" + port + ".");
 	Accept(s);
-	 */
+}
+Server::Server(unsigned short port)
+{
+	sconsole = new Console(stdout, stdin);
+	ReadConfig();
+	TCPSocket *s = new TCPSocket();
+	s->Listen(port);
+	sconsole->WriteLine("Listening on port" + port + ".");
+	Accept(s);
 }
 
 // Accepts incoming connections, and passes requests to the parser
