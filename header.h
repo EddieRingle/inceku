@@ -20,5 +20,4 @@ using namespace CrissCross::Network;
 using namespace CrissCross::System;
 using namespace std;
 
-
 #endif
