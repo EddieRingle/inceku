@@ -15,6 +15,7 @@ enum HTTPMethod {
 
 class Server {
 public:
+	unsigned short port;
 	Server(); // The default constructor
 	Server(unsigned short port); // If someone decides to force a port
 	~Server(); // The deconstructor

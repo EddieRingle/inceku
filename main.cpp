@@ -19,7 +19,7 @@ int init(string arg)
 {
 	if (arg == "start") {
 		console->WriteLine("Start web server");
-		inst = new Server(80);
+		inst = new Server(8080);
 	} else if (arg == "stop") {
 	        console->WriteLine("Stop web server");
 	} else if (arg == "help") {

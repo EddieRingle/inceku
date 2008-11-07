@@ -6,11 +6,11 @@ Console *sconsole = NULL;
 // Server Constructor(s)
 Server::Server()
 {
+	port = 8080; // Config isn't able to be parsed, setting port manually
 	sconsole = new Console(stdout, stdin);
 	ReadConfig();
 	TCPSocket *s = new TCPSocket();
 	s->Listen(port);
-	sconsole->WriteLine("Listening on port" + port + ".");
 	Accept(s);
 }
 Server::Server(unsigned short port)
@@ -19,7 +19,6 @@ Server::Server(unsigned short port)
 	ReadConfig();
 	TCPSocket *s = new TCPSocket();
 	s->Listen(port);
-	sconsole->WriteLine("Listening on port" + port + ".");
 	Accept(s);
 }
 
@@ -31,14 +30,14 @@ int Server::Accept(TCPSocket * a)
 	while (1) {
 		int ccerr;
 		ccerr = s->Accept(&tmps);
-		if (ccerr == CC_ERR_WOULD_BLOCK)
-			sconsole->WriteLine("Non-blocking Sockets are enabled...");
 		if (ccerr == 0) {
 		    while(ReadSocket(tmps) != 0);
 		    // Parse(in) will go here when we're ready to parse stuff.
 		    Respond(tmps);
-		} else {
-		tmps->Close();
+		}
+		if (tmps != NULL)
+		{
+			tmps->Close();
 		}
 		ThreadSleep(50);
 	}
@@ -96,6 +95,5 @@ int Server::ReadConfig()
 	} else {
 	    sconsole->WriteLine("Error reading file?");
 	}
-	delete f;
 	return 0;
 }
