@@ -1,22 +1,25 @@
 #include "header.h"
 #include "webserver.h"
+#include "config.h"
 
 Console *sconsole = NULL;
 
 // Server Constructor(s)
 Server::Server()
 {
-	port = 8080; // Config isn't able to be parsed, setting port manually
 	sconsole = new Console(stdout, stdin);
-	ReadConfig();
+	LoadConfig();
 	TCPSocket *s = new TCPSocket();
 	s->Listen(port);
+	cout << "Listening on port: " << port << endl;
 	Accept(s);
 }
+
+// If someone wanted to force a port through the command line
 Server::Server(unsigned short port)
 {
 	sconsole = new Console(stdout, stdin);
-	ReadConfig();
+	LoadConfig();
 	TCPSocket *s = new TCPSocket();
 	s->Listen(port);
 	Accept(s);
@@ -44,6 +47,7 @@ int Server::Accept(TCPSocket * a)
 	return 0;
 }
 
+// Reads from the socket, currently just prints out what's received
 int Server::ReadSocket(TCPSocket *a)
 {
 	TCPSocket *s = a;
@@ -56,6 +60,7 @@ int Server::ReadSocket(TCPSocket *a)
 	}
 }
 
+// Respond to the HTTP request, currently hard-coded
 int Server::Respond(TCPSocket * a)
 {
 	TCPSocket *s = a;
@@ -76,16 +81,11 @@ int Server::Parse(std::string str)
     return 0;
 }
 
-int Server::ReadConfig()
+// Load the config file and set variables
+int Server::LoadConfig()
 {
-	char *l;
-	FileReader *f = new FileReader();
-	
-	f->Open("inceku.conf");
-	
-	while (!f->EndOfFile()) {
-		f->ReadLine(l,50);
-	}
+	Config *c = new Config();
+	port = c->port;
 	
 	return 0;
 }

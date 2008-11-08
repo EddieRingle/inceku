@@ -17,13 +17,13 @@ enum HTTPMethod {
 class Server {
 public:
 	unsigned short port;
-	Server(); // The default constructor
-	Server(unsigned short port); // If someone decides to force a port
-	~Server(); // The deconstructor
+	Server();
+	Server(unsigned short port);
+	~Server(); 
 	int Accept(TCPSocket *a);
 	int ReadSocket(TCPSocket *a);
 	int Respond(TCPSocket *a);
 	int Parse(std::string str);
-	int ReadConfig();
+	int LoadConfig();
 };
 #endif
