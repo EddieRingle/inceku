@@ -78,22 +78,14 @@ int Server::Parse(std::string str)
 
 int Server::ReadConfig()
 {
-	std::string l;
+	char *l;
 	FileReader *f = new FileReader();
+	
 	f->Open("inceku.conf");
-	sconsole->WriteLine("Opening inceku.conf...");
-	bool IsOpen = f->IsOpen();
-	cout << IsOpen << endl;
-	if (IsOpen) {
-		sconsole->WriteLine("Opened inceku.conf.");
-		while (!f->EndOfFile()) {
-			f->ReadLine(l);
-			if (l.compare(0,1,"#") != 0) {
-			sconsole->WriteLine(l);
-			}
-		}
-	} else {
-	    sconsole->WriteLine("Error reading file?");
+	
+	while (!f->EndOfFile()) {
+		f->ReadLine(l,50);
 	}
+	
 	return 0;
 }

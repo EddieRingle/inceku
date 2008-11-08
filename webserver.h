@@ -1,7 +1,8 @@
-#include "header.h"
-
 #ifndef WEBSERVER_H
 #define WEBSERVER_H
+
+#include "header.h"
+#include "config.h"
 
 enum HTTPMethod {
 	OPT = 0, //OPTIONS = 0
