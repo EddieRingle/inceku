@@ -1,3 +1,14 @@
+/*
+ *   Inceku
+ *   A portable HTTP server.
+ *
+ *   (c) 2008 Eddie Ringle.
+ *   Licensed under the
+ *   Creative Commons Attribution-Noncommercial-Share Alike 3.0 License.
+ *   To view a copy of this license,
+ *   visit http://creativecommons.org/licenses/by-nc-sa/3.0/us/.
+ */
+
 #include "header.h"
 #include "webserver.h"
 #include "config.h"
@@ -38,7 +49,6 @@ int Server::Accept(TCPSocket * a)
 		ccerr = s->Accept(&tmps);
 		if (ccerr == 0) {
 		    while(ReadSocket(tmps) != 0);
-		    // Parse(in) will go here when we're ready to parse stuff.
 		    Respond(tmps);
 		}
 		if (tmps != NULL)
@@ -54,8 +64,8 @@ int Server::Accept(TCPSocket * a)
 int Server::ReadSocket(TCPSocket *a)
 {
 	TCPSocket *s = a;
-	string in;
-	if (s->Read(in) == 0) {
+	char *in;
+	if (s->Read(in,100) == 0) {
 	    sconsole->WriteLine(in);
 	    return 0;
 	} else {
@@ -77,9 +87,12 @@ int Server::Respond(TCPSocket * a)
 
 int Server::Parse(std::string str)
 {
-    /* <todo> Write Parser function.
-    All we care about is the first line the client sends in,
-    it contains the command we must process */
+    
+    return 0;
+}
+
+int Server::RequestCheck(std::string str)
+{
     return 0;
 }
 

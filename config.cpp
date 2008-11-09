@@ -1,6 +1,16 @@
+/*
+ *   Inceku
+ *   A portable HTTP server.
+ *
+ *   (c) 2008 Eddie Ringle.
+ *   Licensed under the
+ *   Creative Commons Attribution-Noncommercial-Share Alike 3.0 License.
+ *   To view a copy of this license,
+ *   visit http://creativecommons.org/licenses/by-nc-sa/3.0/us/.
+ */
+
 #include "config.h"
 #include "header.h"
-#include "StringTokenizer.h"
 
 Config::Config()
 {
