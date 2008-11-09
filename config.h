@@ -12,6 +12,7 @@ public:
     std::string alogdir; // default <inceku dir>/access.log
     std::string elogdir; // default <inceku dir>/error.log
     Config(); // Default constructor
+    int LoadnParse();
     ~Config();
 };
 

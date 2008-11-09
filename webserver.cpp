@@ -8,21 +8,24 @@ Console *sconsole = NULL;
 Server::Server()
 {
 	sconsole = new Console(stdout, stdin);
-	LoadConfig();
+	if(LoadConfig() == 0) {
 	TCPSocket *s = new TCPSocket();
 	s->Listen(port);
 	cout << "Listening on port: " << port << endl;
 	Accept(s);
+	}
 }
 
 // If someone wanted to force a port through the command line
 Server::Server(unsigned short port)
 {
 	sconsole = new Console(stdout, stdin);
+	if(LoadConfig() == 0) {
 	LoadConfig();
 	TCPSocket *s = new TCPSocket();
 	s->Listen(port);
 	Accept(s);
+	}
 }
 
 // Accepts incoming connections, and passes requests to the parser
@@ -64,7 +67,6 @@ int Server::ReadSocket(TCPSocket *a)
 int Server::Respond(TCPSocket * a)
 {
 	TCPSocket *s = a;
-	sconsole->WriteLine("Sending Response...");
 	std::string r = "HTTP/1.1 200 OK\r\nServer: Inceku/0alpha\r\n\r\n"
 			"<h1>It Works! \\o/</h1>\r\n";
 	sconsole->WriteLine(r);
@@ -85,7 +87,14 @@ int Server::Parse(std::string str)
 int Server::LoadConfig()
 {
 	Config *c = new Config();
-	port = c->port;
-	
-	return 0;
+	if(c->LoadnParse() != 0) {
+		return 1;
+	} else {
+		port = c->port;
+		std::string docroot = c->docroot;
+		std::string cgibin = c->cgibin;
+		std::string alogdir = c->alogdir;
+		std::string elogdir = c->elogdir;
+		return 0;
+	}
 }

@@ -1,6 +1,7 @@
 /*
  *   Inceku
  *   A portable HTTP server.
+ *
  *   (c) 2008 Eddie Ringle.
  *   Licensed under the
  *   Creative Commons Attribution-Noncommercial-Share Alike 3.0 License.
@@ -43,7 +44,6 @@ int RunApplication(int argc, char **argv)
 	if (argc <= 1) {
 		string usage = "Usage: WebServer start | stop | help";
 		console->WriteLine(usage);
-		inst = new Server(); // Here for debugging purposes only
 	} else {
 		init(argv[1]);
 	}
