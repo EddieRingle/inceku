@@ -30,17 +30,18 @@ Server::Server()
 // If someone wanted to force a port through the command line
 Server::Server(unsigned short port)
 {
+	unsigned short fport = port;
 	sconsole = new Console(stdout, stdin);
 	if(LoadConfig() == 0) {
 	LoadConfig();
 	TCPSocket *s = new TCPSocket();
-	s->Listen(port);
+	s->Listen(fport);
 	Accept(s);
 	}
 }
 
 // Accepts incoming connections, and passes requests to the parser
-int Server::Accept(TCPSocket * a)
+int Server::Accept(TCPSocket *a)
 {
 	TCPSocket *s = a;
 	TCPSocket *tmps = NULL;
@@ -64,9 +65,10 @@ int Server::Accept(TCPSocket * a)
 int Server::ReadSocket(TCPSocket *a)
 {
 	TCPSocket *s = a;
-	char *in;
-	if (s->Read(in,100) == 0) {
-	    sconsole->WriteLine(in);
+	char *in = new char [250];
+	unsigned int len = 250;
+	if (s->Read(in,&len) == 0) {
+	    Parse(in);
 	    return 0;
 	} else {
 	    return 1;
@@ -74,7 +76,7 @@ int Server::ReadSocket(TCPSocket *a)
 }
 
 // Respond to the HTTP request, currently hard-coded
-int Server::Respond(TCPSocket * a)
+int Server::Respond(TCPSocket *a)
 {
 	TCPSocket *s = a;
 	std::string r = "HTTP/1.1 200 OK\r\nServer: Inceku/0alpha\r\n\r\n"
@@ -85,14 +87,90 @@ int Server::Respond(TCPSocket * a)
 	return 0;
 }
 
-int Server::Parse(std::string str)
+int Server::Parse(char *str)
 {
-    
+    char *line;
+    line = strtok(str,"\n");
+    while(line != NULL) {
+	int meth = RequestCheck(line);
+	switch(meth)
+	{
+	    case OPTIONS:
+		// not implemented yet
+		break;
+	    case GET:
+		ProcGET(line);
+		break;
+	    case HEAD:
+		// not implemented yet
+		break;
+	    case POST:
+		// not implemented yet
+		break;
+	    case PUT:
+		// not implemented yet
+		break;
+	    case TRACE:
+		// not implemented yet
+		break;
+	    case CONNECT:
+		// not implemented yet
+		break;
+	    case -1:
+		break;
+	    default:
+		break;
+	}
+	line = strtok(NULL,"\n");
+    }
     return 0;
 }
 
-int Server::RequestCheck(std::string str)
+int Server::RequestCheck(char *str)
 {
+    if(strncmp(str,"OPTIONS",6) == 0) {
+	return OPTIONS;
+    } else if(strncmp(str,"GET",3) == 0) {
+	return GET;
+    } else if(strncmp(str,"HEAD",4) == 0) {
+	return HEAD;
+    } else if(strncmp(str,"POST",4) == 0) {
+	return POST;
+    } else if(strncmp(str,"PUT",3) == 0) {
+	return PUT;
+    } else if(strncmp(str,"TRACE",5) == 0) {
+	return TRACE;
+    } else if(strncmp(str,"CONNECT",7) == 0) {
+	return CONNECT;
+    } else {
+    return -1; // Not a request line
+    }
+}
+
+int Server::ProcGET(char *str)
+{
+    char *word;
+    word = strtok(str," ");
+    while (word != NULL) {
+	cout << word << endl;
+	if(strcmp(word,"GET")) {
+	    // do nothing, we know it's a GET request
+	} else if(strncmp(word,"/",1) == 0) {
+	    reqdir = *word;
+	    cout << "Requested directory: " << reqdir << endl;
+	} else if(strncmp(word,"HTTP",4) == 0) {
+	    if(strncmp(word,"HTTP/1.0",8) == 0) {
+		httpver = 1.0;
+	    } else if(strncmp(word,"HTTP/1.1",8) == 0) {
+		httpver = 1.1;
+	    } else {
+		httpver = 1.0; // fallback to 1.0
+	    }
+	} else {
+	    // oh well...
+	}
+	word = strtok(NULL," ");
+    }
     return 0;
 }
 
