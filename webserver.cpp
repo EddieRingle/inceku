@@ -85,13 +85,13 @@ int Server::Respond(TCPSocket *a)
 {
 	TCPSocket *s = a;
 	FileReader *f = new FileReader();
-	cout << reqdir << endl;
 	if (reqdir[strlen(reqdir) - 1] == '/')
 	{
 	    cout << "wewt!" << endl;
 	}
 	f->Open(strcat(docroot,reqdir));
-//	s->Send(r);
+	char r[100] = "HTTP/1.1 200 OK\r\nServer: Inceku/0alpha\r\n\r\n<h1>It Works! \\o/</h1>";
+	s->Send(r);
 	return 0;
 }
 
@@ -160,7 +160,6 @@ int Server::ProcGET(char *str)
     char *word;
     word = strtok(str," ");
     while (word != NULL) {
-	cout << word << endl;
 	if(strncmp(word,"/",1) == 0) {
 	    strcpy(reqdir,word);
 	    cout << "Requested directory: " << reqdir << endl;
@@ -173,6 +172,7 @@ int Server::ProcGET(char *str)
 	    } else {
 		httpver = 1.0; // fallback to 1.0
 	    }
+	    cout << "Using HTTP protocol version " << httpver << endl;
 	}
 	word = strtok(NULL," ");
     }
