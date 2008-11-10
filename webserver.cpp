@@ -16,6 +16,7 @@ Console *sconsole = NULL;
 Server::Server()
 {
 	sconsole = new Console(stdout, stdin);
+	reqdir = new char [500];
 	if(LoadConfig() == 0) {
 	TCPSocket *s = new TCPSocket();
 	s->Listen(port);
@@ -29,12 +30,19 @@ Server::Server(unsigned short port)
 {
 	unsigned short fport = port;
 	sconsole = new Console(stdout, stdin);
+	reqdir = new char [500];
 	if(LoadConfig() == 0) {
 	LoadConfig();
 	TCPSocket *s = new TCPSocket();
 	s->Listen(fport);
 	Accept(s);
 	}
+}
+
+Server::~Server()
+{
+	delete [] reqdir;
+	reqdir = NULL;
 }
 
 // Accepts incoming connections, and passes requests to the parser
@@ -149,14 +157,12 @@ int Server::RequestCheck(char *str)
 int Server::ProcGET(char *str)
 {
     char *word;
-    char *reqdir = new char [500];
     word = strtok(str," ");
     while (word != NULL) {
 	cout << word << endl;
 	if(strcmp(word,"GET")) {
 	    // do nothing, we know it's a GET request
 	} else if(strncmp(word,"/",1) == 0) {
-	    reqdir[0] = 0;
 	    strcpy(reqdir,word);
 	    cout << "Requested directory: " << reqdir << endl;
 	} else if(strncmp(word,"HTTP",4) == 0) {
