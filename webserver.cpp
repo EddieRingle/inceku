@@ -3,10 +3,7 @@
  *   A portable HTTP server.
  *
  *   (c) 2008 Eddie Ringle.
- *   Licensed under the
- *   Creative Commons Attribution-Noncommercial-Share Alike 3.0 License.
- *   To view a copy of this license,
- *   visit http://creativecommons.org/licenses/by-nc-sa/3.0/us/.
+ *   Licensed under the GNU GPL v3
  */
 
 #include "header.h"
@@ -83,7 +80,6 @@ int Server::Respond(TCPSocket *a)
 			"<h1>It Works! \\o/</h1>\r\n";
 	sconsole->WriteLine(r);
 	s->Send(r);
-	sconsole->WriteLine("Done. :)");
 	return 0;
 }
 
