@@ -85,6 +85,7 @@ int Server::Respond(TCPSocket *a)
 {
 	TCPSocket *s = a;
 	FileReader *f = new FileReader();
+	cout << reqdir << endl;
 	if (reqdir[strlen(reqdir) - 1] == '/')
 	{
 	    cout << "wewt!" << endl;
@@ -160,12 +161,11 @@ int Server::ProcGET(char *str)
     word = strtok(str," ");
     while (word != NULL) {
 	cout << word << endl;
-	if(strcmp(word,"GET")) {
-	    // do nothing, we know it's a GET request
-	} else if(strncmp(word,"/",1) == 0) {
+	if(strncmp(word,"/",1) == 0) {
 	    strcpy(reqdir,word);
 	    cout << "Requested directory: " << reqdir << endl;
-	} else if(strncmp(word,"HTTP",4) == 0) {
+	}
+	if(strncmp(word,"HTTP",4) == 0) {
 	    if(strncmp(word,"HTTP/1.0",8) == 0) {
 		httpver = 1.0;
 	    } else if(strncmp(word,"HTTP/1.1",8) == 0) {
@@ -173,8 +173,6 @@ int Server::ProcGET(char *str)
 	    } else {
 		httpver = 1.0; // fallback to 1.0
 	    }
-	} else {
-	    // oh well...
 	}
 	word = strtok(NULL," ");
     }
