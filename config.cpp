@@ -11,7 +11,25 @@
 
 Config::Config()
 {
-    // nothing to do here
+    docroot = new char [150];
+    cgibin = new char [150];
+    alogdir = new char [150];
+    elogdir = new char [150];
+    dindex = new char [150];
+}
+
+Config::~Config()
+{
+    delete [] docroot;
+    delete [] cgibin;
+    delete [] alogdir;
+    delete [] elogdir;
+    delete [] dindex;
+    docroot = NULL;
+    cgibin = NULL;
+    alogdir = NULL;
+    elogdir = NULL;
+    dindex = NULL;
 }
 
 int Config::LoadnParse()
@@ -33,12 +51,19 @@ int Config::LoadnParse()
 				cout << "Setting port to " << port << endl;
 			} else if(strcmp(tmp,"docroot") == 0) {
 				docroot = strtok(NULL," ");
+				cout << "Docroot: " << docroot << endl;
 			} else if(strcmp(tmp,"cgi-bin") == 0) {
 				cgibin = strtok(NULL," ");
+				cout << "Cgi-bin: " << cgibin << endl;
 			} else if(strcmp(tmp,"alogdir") == 0) {
 				alogdir = strtok(NULL," ");
+				cout << "access log: " << alogdir << endl;
 			} else if(strcmp(tmp,"elogdir") == 0) {
 				elogdir = strtok(NULL," ");
+				cout << "error log: " << elogdir << endl;
+			} else if(strcmp(tmp,"dindex") == 0) {
+				dindex = strtok(NULL," ");
+				cout << "Setting directory index to " << dindex << endl;
 			} else {
 			    cout << "Error reading config file on line " << line << endl;
 			    return 1;
@@ -48,9 +73,4 @@ int Config::LoadnParse()
 		}
 	}
 	return 0;
-}
-
-Config::~Config()
-{
-	// nothing to see here
 }

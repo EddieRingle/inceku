@@ -22,11 +22,12 @@
 Server *inst = NULL;
 Console *console = NULL;
 
-int init(string arg)
+int init(std::string arg)
 {
 	if (arg == "start") {
 		console->WriteLine("Start web server");
 		inst = new Server();
+		inst->Start();
 	} else if (arg == "stop") {
 	        console->WriteLine("Stop web server");
 	} else if (arg == "help") {

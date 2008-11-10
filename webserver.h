@@ -10,7 +10,6 @@
 #define WEBSERVER_H
 
 #include "header.h"
-#include "config.h"
 
 enum HTTPMethod {
 	OPTIONS = 0, //OPTIONS = 0
@@ -24,19 +23,12 @@ enum HTTPMethod {
 
 class Server {
 public:
-	// Config variables
-	unsigned int port;
-	char *docroot;
-	char *cgibin;
-	char *alogdir;
-	char *elogdir;
-	// End Config variables
-    
 	char *reqdir;
 	float httpver;
 	Server();
-	Server(unsigned short port);
-	~Server(); 
+	~Server();
+	int Start();
+	int Start(unsigned short fport);
 	int Accept(TCPSocket *a);
 	int ReadSocket(TCPSocket *a);
 	int Respond(TCPSocket *a);

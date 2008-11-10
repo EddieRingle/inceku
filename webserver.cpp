@@ -16,31 +16,31 @@ Console *sconsole = NULL;
 Server::Server()
 {
 	sconsole = new Console(stdout, stdin);
+	
 	reqdir = new char [500];
-	if(LoadConfig() == 0) {
-	TCPSocket *s = new TCPSocket();
-	s->Listen(port);
-	cout << "Listening on port: " << port << endl;
-	Accept(s);
+	
+	if(LoadConfig() != 0) {
+	    // die! (Actually, don't know how to do this yet, so... yeah)
 	}
 }
 
-// If someone wanted to force a port through the command line
-Server::Server(unsigned short port)
+int Server::Start()
 {
-	unsigned short fport = port;
-	sconsole = new Console(stdout, stdin);
-	reqdir = new char [500];
-	if(LoadConfig() == 0) {
-	LoadConfig();
-	TCPSocket *s = new TCPSocket();
-	s->Listen(fport);
-	Accept(s);
-	}
+    TCPSocket *s = new TCPSocket();
+    s->Listen(port);
+    Accept(s);
+}
+
+int Server::Start(unsigned short fport)
+{
+    TCPSocket *s = new TCPSocket();
+    s->Listen(fport);
+    Accept(s);
 }
 
 Server::~Server()
 {
+	delete sconsole;
 	delete [] reqdir;
 	reqdir = NULL;
 }
@@ -87,7 +87,9 @@ int Server::Respond(TCPSocket *a)
 	FileReader *f = new FileReader();
 	if (reqdir[strlen(reqdir) - 1] == '/')
 	{
-	    cout << "wewt!" << endl;
+	    cout << dindex << endl;
+	    reqdir = strcat(reqdir,dindex);
+	    cout << reqdir << endl;
 	}
 	f->Open(strcat(docroot,reqdir));
 	char r[100] = "HTTP/1.1 200 OK\r\nServer: Inceku/0alpha\r\n\r\n<h1>It Works! \\o/</h1>";
@@ -187,10 +189,12 @@ int Server::LoadConfig()
 		return 1;
 	} else {
 		port = c->port;
-		docroot = c->docroot;
-		cgibin = c->cgibin;
-		alogdir = c->alogdir;
-		elogdir = c->elogdir;
+		strcpy(docroot,c->docroot);
+		cout << docroot << endl;
+		strcpy(cgibin,c->cgibin);
+		strcpy(alogdir,c->alogdir);
+		strcpy(elogdir,c->elogdir);
+		strcpy(dindex,c->dindex);
 		return 0;
 	}
 }

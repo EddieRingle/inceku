@@ -10,6 +10,7 @@
 #define CONFIG_H
 
 #include "header.h"
+#include "webserver.h"
 
 class Config {
 public:
@@ -18,6 +19,7 @@ public:
     char *cgibin; // default <inceku dir>/cgi-bin
     char *alogdir; // default <inceku dir>/access.log
     char *elogdir; // default <inceku dir>/error.log
+    char *dindex; // default index.html
     Config(); // Default constructor
     int LoadnParse();
     ~Config();
