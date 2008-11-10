@@ -76,10 +76,13 @@ int Server::ReadSocket(TCPSocket *a)
 int Server::Respond(TCPSocket *a)
 {
 	TCPSocket *s = a;
-	std::string r = "HTTP/1.1 200 OK\r\nServer: Inceku/0alpha\r\n\r\n"
-			"<h1>It Works! \\o/</h1>\r\n";
-	sconsole->WriteLine(r);
-	s->Send(r);
+	FileReader *f = new FileReader();
+	if (reqdir[strlen(reqdir) - 1] == '/')
+	{
+	    cout << "wewt!" << endl;
+	}
+	f->Open(strcat(docroot,reqdir));
+//	s->Send(r);
 	return 0;
 }
 
@@ -146,13 +149,15 @@ int Server::RequestCheck(char *str)
 int Server::ProcGET(char *str)
 {
     char *word;
+    char *reqdir = new char [500];
     word = strtok(str," ");
     while (word != NULL) {
 	cout << word << endl;
 	if(strcmp(word,"GET")) {
 	    // do nothing, we know it's a GET request
 	} else if(strncmp(word,"/",1) == 0) {
-	    reqdir = *word;
+	    reqdir[0] = 0;
+	    strcpy(reqdir,word);
 	    cout << "Requested directory: " << reqdir << endl;
 	} else if(strncmp(word,"HTTP",4) == 0) {
 	    if(strncmp(word,"HTTP/1.0",8) == 0) {
@@ -178,10 +183,10 @@ int Server::LoadConfig()
 		return 1;
 	} else {
 		port = c->port;
-		std::string docroot = c->docroot;
-		std::string cgibin = c->cgibin;
-		std::string alogdir = c->alogdir;
-		std::string elogdir = c->elogdir;
+		docroot = c->docroot;
+		cgibin = c->cgibin;
+		alogdir = c->alogdir;
+		elogdir = c->elogdir;
 		return 0;
 	}
 }

@@ -24,7 +24,15 @@ enum HTTPMethod {
 
 class Server {
 public:
-	char reqdir;
+	// Config variables
+	unsigned int port;
+	char *docroot;
+	char *cgibin;
+	char *alogdir;
+	char *elogdir;
+	// End Config variables
+    
+	char *reqdir;
 	float httpver;
 	Server();
 	Server(unsigned short port);

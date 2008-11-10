@@ -14,10 +14,10 @@
 class Config {
 public:
     unsigned int port; // default 8080
-    std::string docroot; // default <inceku dir>/docroot
-    std::string cgibin; // default <inceku dir>/cgi-bin
-    std::string alogdir; // default <inceku dir>/access.log
-    std::string elogdir; // default <inceku dir>/error.log
+    char *docroot; // default <inceku dir>/docroot
+    char *cgibin; // default <inceku dir>/cgi-bin
+    char *alogdir; // default <inceku dir>/access.log
+    char *elogdir; // default <inceku dir>/error.log
     Config(); // Default constructor
     int LoadnParse();
     ~Config();
