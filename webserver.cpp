@@ -18,6 +18,11 @@ Server::Server()
 	sconsole = new Console(stdout, stdin);
 	
 	reqdir = new char [500];
+	docroot = new char [150];
+	cgibin = new char [150];
+	alogdir = new char [150];
+	elogdir = new char [150];
+	dindex = new char [150];
 	
 	if(LoadConfig() != 0) {
 	    // die! (Actually, don't know how to do this yet, so... yeah)
@@ -43,6 +48,16 @@ Server::~Server()
 	delete sconsole;
 	delete [] reqdir;
 	reqdir = NULL;
+	delete [] docroot;
+	delete [] cgibin;
+	delete [] alogdir;
+	delete [] elogdir;
+	delete [] dindex;
+	docroot = NULL;
+	cgibin = NULL;
+	alogdir = NULL;
+	elogdir = NULL;
+	dindex = NULL;
 }
 
 // Accepts incoming connections, and passes requests to the parser

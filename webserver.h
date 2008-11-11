@@ -23,6 +23,12 @@ enum HTTPMethod {
 
 class Server {
 public:
+        unsigned int port; // default 8080
+	char *docroot; // default <inceku dir>/docroot
+	char *cgibin; // default <inceku dir>/cgi-bin
+	char *alogdir; // default <inceku dir>/access.log
+	char *elogdir; // default <inceku dir>/error.log
+	char *dindex; // default index.html
 	char *reqdir;
 	float httpver;
 	Server();
