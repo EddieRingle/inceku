@@ -50,19 +50,19 @@ int Config::LoadnParse()
 			    	port = atoi(strtok(NULL," "));
 				cout << "Setting port to " << port << endl;
 			} else if(strcmp(tmp,"docroot") == 0) {
-				docroot = strtok(NULL," ");
+				strcpy(docroot, strtok(NULL," "));
 				cout << "Docroot: " << docroot << endl;
 			} else if(strcmp(tmp,"cgi-bin") == 0) {
-				cgibin = strtok(NULL," ");
+				strcpy(cgibin, strtok(NULL," "));
 				cout << "Cgi-bin: " << cgibin << endl;
 			} else if(strcmp(tmp,"alogdir") == 0) {
-				alogdir = strtok(NULL," ");
+				strcpy(alogdir, strtok(NULL," "));
 				cout << "access log: " << alogdir << endl;
 			} else if(strcmp(tmp,"elogdir") == 0) {
-				elogdir = strtok(NULL," ");
+				strcpy(elogdir, strtok(NULL," "));
 				cout << "error log: " << elogdir << endl;
 			} else if(strcmp(tmp,"dindex") == 0) {
-				dindex = strtok(NULL," ");
+				strcpy(dindex, strtok(NULL," "));
 				cout << "Setting directory index to " << dindex << endl;
 			} else {
 			    cout << "Error reading config file on line " << line << endl;

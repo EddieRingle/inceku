@@ -34,6 +34,7 @@ int Server::Start()
     TCPSocket *s = new TCPSocket();
     s->Listen(port);
     Accept(s);
+    return 0;
 }
 
 int Server::Start(unsigned short fport)
@@ -41,6 +42,7 @@ int Server::Start(unsigned short fport)
     TCPSocket *s = new TCPSocket();
     s->Listen(fport);
     Accept(s);
+    return 0;
 }
 
 Server::~Server()
