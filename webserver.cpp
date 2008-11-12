@@ -204,12 +204,12 @@ int Server::LoadConfig()
 		return 1;
 	} else {
 		port = c->port;
-		strcpy(docroot,c->docroot);
-		cout << docroot << endl;
-		strcpy(cgibin,c->cgibin);
-		strcpy(alogdir,c->alogdir);
-		strcpy(elogdir,c->elogdir);
-		strcpy(dindex,c->dindex);
+		docroot = c->&docroot;
+		cout << docroot << endl << c->docroot << endl;
+		cgibin = c->cgibin;
+		alogdir = c->alogdir;
+		elogdir = c->elogdir;
+		dindex = c->dindex;
 		return 0;
 	}
 }
