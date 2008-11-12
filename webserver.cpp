@@ -104,9 +104,7 @@ int Server::Respond(TCPSocket *a)
 	FileReader *f = new FileReader();
 	if (reqdir[strlen(reqdir) - 1] == '/')
 	{
-	    cout << dindex << endl;
 	    reqdir = strcat(reqdir,dindex);
-	    cout << reqdir << endl;
 	}
 	f->Open(strcat(docroot,reqdir));
 	char r[100] = "HTTP/1.1 200 OK\r\nServer: Inceku/0alpha\r\n\r\n<h1>It Works! \\o/</h1>";
@@ -206,12 +204,11 @@ int Server::LoadConfig()
 		return 1;
 	} else {
 		port = c->port;
-		docroot = c->&docroot;
-		cout << docroot << endl << c->docroot << endl;
-		cgibin = c->cgibin;
-		alogdir = c->alogdir;
-		elogdir = c->elogdir;
-		dindex = c->dindex;
+		strcpy(docroot,c->docroot);
+		strcpy(cgibin,c->cgibin);
+		strcpy(alogdir,c->alogdir);
+		strcpy(elogdir,c->elogdir);
+		strcpy(dindex,c->dindex);
 		return 0;
 	}
 }
