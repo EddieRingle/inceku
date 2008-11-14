@@ -114,6 +114,12 @@ int Server::Respond(TCPSocket *a)
 	
 	strcat(filedir,reqdir);
 	f->Open(filedir);
+	if (!f->IsOpen()) {
+	    
+	    strcat(filedir,"/");
+	    strcat(filedir,dindex);
+	    f->Open(filedir);
+	}
 	s->Send("HTTP/");
 	s->Send(httpvers);
 	s->Send(" 200 OK\r\nServer: Inceku/0alpha\r\n\r\n");
