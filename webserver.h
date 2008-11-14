@@ -31,6 +31,7 @@ public:
 	char *dindex; // default index.html
 	char *reqdir;
 	float httpver;
+	std::string httpvers;
 	Server();
 	~Server();
 	int Start();

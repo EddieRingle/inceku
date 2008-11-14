@@ -102,13 +102,31 @@ int Server::Respond(TCPSocket *a)
 {
 	TCPSocket *s = a;
 	FileReader *f = new FileReader();
+	
+	char *filedir;
+	filedir = new char [250];
+	strcat(filedir,docroot);
+	
 	if (reqdir[strlen(reqdir) - 1] == '/')
 	{
-	    reqdir = strcat(reqdir,dindex);
+	    strcat(reqdir,dindex);
 	}
-	f->Open(strcat(docroot,reqdir));
-	char r[100] = "HTTP/1.1 200 OK\r\nServer: Inceku/0alpha\r\n\r\n<h1>It Works! \\o/</h1>";
-	s->Send(r);
+	
+	strcat(filedir,reqdir);
+	f->Open(filedir);
+	s->Send("HTTP/");
+	s->Send(httpvers);
+	s->Send(" 200 OK\r\nServer: Inceku/0alpha\r\n\r\n");
+	
+	while (!f->EndOfFile()) {
+		char buffer [100];
+		f->Read(buffer,sizeof(buffer),0,sizeof(buffer));
+		s->Send(buffer);
+	}
+	
+	delete [] filedir;
+	filedir = NULL;
+	
 	return 0;
 }
 
@@ -184,12 +202,15 @@ int Server::ProcGET(char *str)
 	if(strncmp(word,"HTTP",4) == 0) {
 	    if(strncmp(word,"HTTP/1.0",8) == 0) {
 		httpver = 1.0;
+		httpvers = "1.0";
 	    } else if(strncmp(word,"HTTP/1.1",8) == 0) {
 		httpver = 1.1;
+		httpvers = "1.1";
 	    } else {
 		httpver = 1.0; // fallback to 1.0
+		httpvers = "1.0";
 	    }
-	    cout << "Using HTTP protocol version " << httpver << endl;
+	    cout << "Using HTTP protocol version " << httpvers << endl;
 	}
 	word = strtok(NULL," ");
     }
