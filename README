@@ -8,19 +8,15 @@ Or, you can get a copy via SVN at:
 http://crisscross.googlecode.com/
 *NOTE*: The SVN repo may not be as up-to-date as the Git repo,
 you have been warned!
+
 CrissCross also requires CMake, which you can get at:
 http://cmake.org/
 CMake can also be installed via APT for Debian-based Linux Distros:
 sudo apt-get install cmake
 
-First off, when I develop this on my machine,
-the directory structure is layed out like this:
+When compiling from source taken from the git repo, you only do:
+cmake .
+make check
+make
 
-/
-/crisscross
-/crisscross/source
-/crisscross/source/crisscross
-/inceku
-
-This means that the includes are set to reflect this setup.
-Please consider this before building. :)
+You should then get a Inceku binary. Modify inceku.conf to setup your server and run Inceku.
