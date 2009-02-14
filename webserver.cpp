@@ -3,7 +3,7 @@
  *   A portable HTTP server.
  *
  *   (c) 2008 Eddie Ringle.
- *   Licensed under the GNU GPL v3
+ *   Licensed under the New BSD License.
  */
 
 #include "header.h"
@@ -103,16 +103,17 @@ int Server::Respond(TCPSocket *a)
 	TCPSocket *s = a;
 	FileReader *f = new FileReader();
 	
-	char *filedir;
-	filedir = new char [250];
+	char *filedir = new char [250];
 	strcat(filedir,docroot);
-	
+
 	if (reqdir[strlen(reqdir) - 1] == '/')
 	{
 	    strcat(reqdir,dindex);
 	}
 	
+	cout << "filedir: " << filedir << endl;
 	strcat(filedir,reqdir);
+	cout << "Fetching " << filedir << endl;
 	f->Open(filedir);
 	if (!f->IsOpen()) {
 	    

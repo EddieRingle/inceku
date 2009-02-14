@@ -120,7 +120,7 @@ endif(CMAKE_COMPILER_IS_GNUCXX)
 
 add_subdirectory(contrib/crisscross)
 
-add_executable(Inceku header.cpp main.cpp config.cpp webserver.cpp)
+add_executable(Inceku header.cpp main.cpp config.cpp webserver.cpp logger.cpp)
 add_precompiled_header(Inceku ${CMAKE_CURRENT_SOURCE_DIR}/header.h ${CMAKE_CURRENT_SOURCE_DIR}/header.cpp)
 
 target_link_libraries (Inceku CrissCross)

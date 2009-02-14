@@ -3,7 +3,7 @@
  *   A portable HTTP server.
  *
  *   (c) 2008 Eddie Ringle.
- *   Licensed under the GNU GPL v3
+ *   Licensed under the New BSD License.
  */
 
 #ifndef CONFIG_H

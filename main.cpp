@@ -3,7 +3,7 @@
  *   A portable HTTP server.
  *
  *   (c) 2008 Eddie Ringle.
- *   Licensed under the GNU GPL v3
+ *   Licensed under the New BSD License.
  *
  *   Built on:
  *   CrissCross
@@ -31,7 +31,7 @@ int init(std::string arg)
 	} else if (arg == "stop") {
 	        console->WriteLine("Stop web server");
 	} else if (arg == "help") {
-		console->WriteLine("Usage: WebServer start | stop | help");
+		console->WriteLine("Usage: Inceku start | stop | help");
 	}
 	return 0;
 }
@@ -40,7 +40,7 @@ int RunApplication(int argc, char **argv)
 {
 	console = new Console(stdout, stdin);
 	if (argc <= 1) {
-		string usage = "Usage: WebServer start | stop | help";
+		string usage = "Usage: Inceku start | stop | help";
 		console->WriteLine(usage);
 	} else {
 		init(argv[1]);
